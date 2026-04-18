@@ -1,0 +1,30 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+project.lock.json
+packages/
+
+# .NET
+*.dll
+*.exe
+*.pdb
+
+# ASP.NET
+appsettings.*.json
+!appsettings.json
+
+# OS
+.DS_Store
+Thumbs.db
