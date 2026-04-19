@@ -3,6 +3,12 @@ namespace CompanyStructureApi.DTOs.Departments;
 public class DepartmentCreateRequest
 {
     [Required]
+    public string CompanyCode { get; set; } = null!;
+
+    [Required]
+    public string DivisionCode { get; set; } = null!;
+
+    [Required]
     public string ProjectCode { get; set; } = null!;
 
     [Required, MaxLength(255)]

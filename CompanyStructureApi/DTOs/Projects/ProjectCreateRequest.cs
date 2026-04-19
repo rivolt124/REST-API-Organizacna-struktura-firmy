@@ -3,6 +3,9 @@ namespace CompanyStructureApi.DTOs.Projects;
 public class ProjectCreateRequest
 {
     [Required]
+    public string CompanyCode { get; set; } = null!;
+
+    [Required]
     public string DivisionCode { get; set; } = null!;
 
     [Required, MaxLength(255)]

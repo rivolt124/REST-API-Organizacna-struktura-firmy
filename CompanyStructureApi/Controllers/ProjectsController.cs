@@ -12,6 +12,7 @@ public class ProjectsController : ControllerBase
     public async Task<IActionResult> Search(
         [FromQuery] string? name,
         [FromQuery] string? code,
+        [FromQuery] string? companyCode,
         [FromQuery] string? divisionCode
     )
     {
@@ -25,8 +26,10 @@ public class ProjectsController : ControllerBase
             query = query.Where(p => p.project_name.Contains(name));
         if (!string.IsNullOrWhiteSpace(code))
             query = query.Where(p => p.project_code.Contains(code));
+        if (!string.IsNullOrWhiteSpace(companyCode))
+            query = query.Where(p => p.Division!.Company!.company_code == companyCode);
         if (!string.IsNullOrWhiteSpace(divisionCode))
-            query = query.Where(p => p.Division != null && p.Division.division_code == divisionCode);
+            query = query.Where(p => p.Division!.division_code == divisionCode);
 
         var projects = await query.ToListAsync();
         return Ok(projects.Select(p => ResponseMapper.ToProjectResponse(p, p.Division!.division_code)));
@@ -35,7 +38,7 @@ public class ProjectsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return await Search(null, null, null);
+        return await Search(null, null, null, null);
     }
 
     [HttpGet("{id:int}")]
@@ -58,7 +61,8 @@ public class ProjectsController : ControllerBase
     {
         var division = await _db.Divisions
             .Include(d => d.Company)
-            .FirstOrDefaultAsync(d => d.division_code == request.DivisionCode);
+            .FirstOrDefaultAsync(d => d.division_code == request.DivisionCode
+                                   && d.Company!.company_code == request.CompanyCode);
         if (division == null)
             return NotFound($"Division not found.");
 

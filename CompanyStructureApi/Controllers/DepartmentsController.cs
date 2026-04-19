@@ -12,6 +12,8 @@ public class DepartmentsController : ControllerBase
     public async Task<IActionResult> Search(
         [FromQuery] string? name,
         [FromQuery] string? code,
+        [FromQuery] string? companyCode,
+        [FromQuery] string? divisionCode,
         [FromQuery] string? projectCode
     )
     {
@@ -22,8 +24,12 @@ public class DepartmentsController : ControllerBase
             query = query.Where(d => d.department_name.Contains(name));
         if (!string.IsNullOrWhiteSpace(code))
             query = query.Where(d => d.department_code.Contains(code));
+        if (!string.IsNullOrWhiteSpace(companyCode))
+            query = query.Where(d => d.Project!.Division!.Company!.company_code == companyCode);
+        if (!string.IsNullOrWhiteSpace(divisionCode))
+            query = query.Where(d => d.Project!.Division!.division_code == divisionCode);
         if (!string.IsNullOrWhiteSpace(projectCode))
-            query = query.Where(d => d.Project != null && d.Project.project_code == projectCode);
+            query = query.Where(d => d.Project!.project_code == projectCode);
 
         var departments = await query
             .Select(d => new DepartmentResponse
@@ -45,7 +51,7 @@ public class DepartmentsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        return await Search(null, null, null);
+        return await Search(null, null, null, null, null);
     }
 
     [HttpGet("{id:int}")]
@@ -78,7 +84,9 @@ public class DepartmentsController : ControllerBase
     {
         var project = await _db.Projects
             .Include(p => p.Division)
-            .FirstOrDefaultAsync(p => p.project_code == request.ProjectCode);
+            .FirstOrDefaultAsync(p => p.project_code == request.ProjectCode
+                                   && p.Division!.division_code == request.DivisionCode
+                                   && p.Division!.Company!.company_code == request.CompanyCode);
         if (project == null)
             return NotFound($"Project not found.");
 
@@ -157,9 +165,9 @@ public class DepartmentsController : ControllerBase
             ProjectCode = department.Project!.project_code,
             DepartmentName = department.department_name,
             DepartmentCode = department.department_code,
-            LeaderEmail = department.DepartmentLeader?.email,
-            LeaderFullName = department.DepartmentLeader != null
-                ? $"{department.DepartmentLeader.title} {department.DepartmentLeader.firstName} {department.DepartmentLeader.lastName}".Trim()
+            LeaderEmail = leader?.email,
+            LeaderFullName = leader != null
+                ? $"{leader.title} {leader.firstName} {leader.lastName}".Trim()
                 : null
         });
     }
