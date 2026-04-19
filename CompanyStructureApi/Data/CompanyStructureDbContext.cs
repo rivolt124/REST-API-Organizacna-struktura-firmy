@@ -1,4 +1,3 @@
-using CompanyStructureApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CompanyStructureApi.Data;
