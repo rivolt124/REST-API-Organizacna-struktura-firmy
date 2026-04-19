@@ -8,5 +8,5 @@ public class CompanyRequest
     [Required, MaxLength(20)]
     public string CompanyCode { get; set; } = null!;
 
-    public string? DirectorEmail { get; set; }
+    public int? DirectorId { get; set; }
 }

@@ -8,5 +8,5 @@ public class DivisionUpdateRequest
     [Required, MaxLength(20)]
     public string DivisionCode { get; set; } = null!;
 
-    public string? LeaderEmail { get; set; }
+    public int? LeaderId { get; set; }
 }

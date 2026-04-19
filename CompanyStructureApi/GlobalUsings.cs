@@ -1,5 +1,7 @@
 global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
 global using CompanyStructureApi.Models;
 global using CompanyStructureApi.Data;
 global using CompanyStructureApi.DTOs.Companies;
@@ -7,3 +9,4 @@ global using CompanyStructureApi.DTOs.Employees;
 global using CompanyStructureApi.DTOs.Divisions;
 global using CompanyStructureApi.DTOs.Projects;
 global using CompanyStructureApi.DTOs.Departments;
+global using CompanyStructureApi.Helpers;

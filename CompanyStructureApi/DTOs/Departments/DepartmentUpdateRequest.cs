@@ -8,5 +8,5 @@ public class DepartmentUpdateRequest
     [Required, MaxLength(20)]
     public string DepartmentCode { get; set; } = null!;
 
-    public string? LeaderEmail { get; set; }
+    public int? LeaderId { get; set; }
 }

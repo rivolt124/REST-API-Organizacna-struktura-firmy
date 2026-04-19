@@ -8,5 +8,5 @@ public class ProjectUpdateRequest
     [Required, MaxLength(20)]
     public string ProjectCode { get; set; } = null!;
 
-    public string? LeaderEmail { get; set; }
+    public int? LeaderId { get; set; }
 }
