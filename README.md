@@ -36,7 +36,7 @@ Scalar dokumentácia: `http://localhost:5000/scalar/v1`
 
 **1. Inicializácia databázy**
 
-Treba spustiť skript `db/database-init.sql` na lokálnom SQL Serveri. Skript vytvorí databázu `CompanyStructuredb` vrátane schémy, constraints, triggerov a ukážkových dát.
+Treba spustiť skript `db/database-init.sql` na lokálnom SQL Serveri. Skript vytvorí databázu `CompanyStructuredb` vrátane tabuliek, constraints, triggerov a ukážkových dát.
 
 **2. Konfigurácia connection stringu**
 
@@ -116,7 +116,6 @@ Pre hierarchické odpovede (Spoločnosť → Divízie → Projekty → Oddelenia
 
 Rozhodol som sa pre `.Include()` + `ResponseMapper`, pretože:
 - Rozdiel vo veľkosti DTO oproti modelu je minimálny
-- Načítanie celej hierarchickej štruktúry je v tomto prípade nevyhnutné
 - Prístup cez `ResponseMapper` výrazne zlepšuje čitateľnosť a udržateľnosť kódu pri hlboko vnorených mapovaniach
 
 Pre zdroje, ktoré hierarchiu neobsahujú (`Employee`, `Department`), je namiesto toho použitá výkonnejšia EF Core projekcia cez `.Select()`, ktorá vyberá priamo iba potrebné stĺpce bez načítavania zbytočných navigačných entít.
