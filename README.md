@@ -126,7 +126,7 @@ Pre zdroje, ktoré hierarchiu neobsahujú (`Employee`, `Department`), je namiest
 ## Využitie AI
 
 Pri vývoji projektu som využíval AI nástroje (GitHub Copilot) ako asistenciu pri:
-- generovaní SQL skriptov (schéma, constraints, triggery, seed dáta)
+- generovaní SQL skriptov (constraints, functions, triggery, seed dáta)
 - návrhu a generovaní testovacích scenárov (TeaPie `.http` a `.csx` súbory)
 
 Samotná architektúra API, návrh dátového modelu a implementácia v C# je moja vlastná.
