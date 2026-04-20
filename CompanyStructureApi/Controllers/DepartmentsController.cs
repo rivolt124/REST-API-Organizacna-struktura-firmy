@@ -182,7 +182,14 @@ public class DepartmentsController : ControllerBase
             return NotFound($"Department not found.");
 
         _db.Departments.Remove(department);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Department is still referenced by other records.");
+        }
         return NoContent();
     }
 }

@@ -139,7 +139,14 @@ public class CompaniesController : ControllerBase
             return NotFound($"Company not found.");
 
         _db.Companies.Remove(company);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Company is still referenced by other records.");
+        }
         return NoContent();
     }
 }

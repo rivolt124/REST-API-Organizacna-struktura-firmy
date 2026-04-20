@@ -91,6 +91,8 @@ tp.Test("PUT-01: PutUpdateName returns 200 with updated name", () =>
     dynamic body = tp.Responses["PutUpdateName"].GetBodyAsExpando();
     Equal("Updated Test Project", (string)body.projectName);
     NotNull((object)body.leaderEmail);
+    NotNull((object)body.leaderFullName);
+    Equal("Test ProjLeader", (string)body.leaderFullName);
 });
 
 tp.Test("PUT-02: PutRemoveLeader returns 200 with null leaderEmail", () =>
@@ -141,4 +143,27 @@ tp.Test("PUT-06: PutBadLeader returns 404 (leader from different company)", () =
 tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
+});
+
+tp.Test("SCOPE-01: CreateTempDivision2 returned 201", () =>
+{
+    Equal(201, (int)tp.Responses["CreateTempDivision2"].StatusCode);
+});
+
+tp.Test("SCOPE-02: PostSameCodeDifferentDivision returns 201 (code is scoped per division)", () =>
+{
+    Equal(201, (int)tp.Responses["PostSameCodeDifferentDivision"].StatusCode);
+    dynamic body = tp.Responses["PostSameCodeDifferentDivision"].GetBodyAsExpando();
+    Equal("PRJ-TEST-AUTO", (string)body.projectCode);
+    Equal("DIV-TEMP-SCOPETEST", (string)body.divisionCode);
+});
+
+tp.Test("CLEANUP: DeleteScopeTestProject returned 204", () =>
+{
+    Equal(204, (int)tp.Responses["DeleteScopeTestProject"].StatusCode);
+});
+
+tp.Test("CLEANUP: DeleteTempDivision2 returned 204", () =>
+{
+    Equal(204, (int)tp.Responses["DeleteTempDivision2"].StatusCode);
 });

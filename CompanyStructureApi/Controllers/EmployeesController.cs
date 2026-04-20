@@ -162,7 +162,14 @@ public class EmployeesController : ControllerBase
             return NotFound($"Employee not found.");
 
         _db.Employees.Remove(employee);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Employee is still referenced by other records.");
+        }
         return NoContent();
     }
 }

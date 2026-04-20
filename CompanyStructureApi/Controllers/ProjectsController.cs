@@ -160,7 +160,14 @@ public class ProjectsController : ControllerBase
             return NotFound($"Project not found.");
 
         _db.Projects.Remove(project);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Project is still referenced by other records.");
+        }
         return NoContent();
     }
 }

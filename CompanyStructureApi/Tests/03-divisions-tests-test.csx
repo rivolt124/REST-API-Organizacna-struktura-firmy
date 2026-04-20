@@ -84,6 +84,8 @@ tp.Test("PUT-01: PutUpdateName returns 200 with updated name", () =>
     dynamic body = tp.Responses["PutUpdateName"].GetBodyAsExpando();
     Equal("Updated Test Division", (string)body.divisionName);
     NotNull((object)body.leaderEmail);
+    NotNull((object)body.leaderFullName);
+    Equal("Bc. Test DivLeader", (string)body.leaderFullName);
 });
 
 tp.Test("PUT-02: PutRemoveLeader returns 200 with null leaderEmail", () =>

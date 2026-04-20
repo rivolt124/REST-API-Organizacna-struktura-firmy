@@ -157,7 +157,14 @@ public class DivisionsController : ControllerBase
             return NotFound($"Division not found.");
 
         _db.Divisions.Remove(division);
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            return Conflict("Division is still referenced by other records.");
+        }
         return NoContent();
     }
 }

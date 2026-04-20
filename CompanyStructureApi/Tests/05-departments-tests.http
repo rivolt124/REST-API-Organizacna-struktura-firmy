@@ -211,3 +211,44 @@ Content-Type: application/json
 # @name DeleteNotFound
 DELETE {{host}}/api/departments/99999
 Accept: application/json
+
+###
+
+# @name CreateTempProject2
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Temp Project 2",
+  "projectCode": "PRJ-TEMP-SCOPETEST",
+  "leaderId": null
+}
+
+###
+
+# @name PostSameCodeDifferentProject
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEMP-SCOPETEST",
+  "departmentName": "Same Code Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name DeleteScopeTestDepartment
+DELETE {{host}}/api/departments/{{PostSameCodeDifferentProject.response.body.$.departmentId}}
+Accept: application/json
+
+###
+
+# @name DeleteTempProject2
+DELETE {{host}}/api/projects/{{CreateTempProject2.response.body.$.projectId}}
+Accept: application/json

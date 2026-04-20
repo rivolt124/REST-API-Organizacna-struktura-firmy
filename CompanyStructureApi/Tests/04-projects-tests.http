@@ -201,3 +201,42 @@ Content-Type: application/json
 # @name DeleteNotFound
 DELETE {{host}}/api/projects/99999
 Accept: application/json
+
+###
+
+# @name CreateTempDivision2
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionName": "Temp Division 2",
+  "divisionCode": "DIV-TEMP-SCOPETEST",
+  "leaderId": null
+}
+
+###
+
+# @name PostSameCodeDifferentDivision
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEMP-SCOPETEST",
+  "projectName": "Same Code Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name DeleteScopeTestProject
+DELETE {{host}}/api/projects/{{PostSameCodeDifferentDivision.response.body.$.projectId}}
+Accept: application/json
+
+###
+
+# @name DeleteTempDivision2
+DELETE {{host}}/api/divisions/{{CreateTempDivision2.response.body.$.divisionId}}
+Accept: application/json

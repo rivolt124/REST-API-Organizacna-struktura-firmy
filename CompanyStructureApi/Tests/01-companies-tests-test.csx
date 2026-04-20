@@ -87,6 +87,8 @@ tp.Test("PUT-02: PutAssignDirector returns 200 with directorEmail populated", ()
     dynamic body = tp.Responses["PutAssignDirector"].GetBodyAsExpando();
     NotNull((object)body.directorEmail);
     Equal("test.director.auto@testcorp.com", (string)body.directorEmail);
+    NotNull((object)body.directorFullName);
+    Equal("Ing. Test Director", (string)body.directorFullName);
 });
 
 tp.Test("PUT-03: PutRemoveDirector returns 200 with null directorEmail", () =>
@@ -127,4 +129,9 @@ tp.Test("POST-03: PostMissingFields returns 400", () =>
 tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
+});
+
+tp.Test("DELETE-02: DeleteCompanyConflict returns 409 (company still has employees)", () =>
+{
+    Equal(409, (int)tp.Responses["DeleteCompanyConflict"].StatusCode);
 });

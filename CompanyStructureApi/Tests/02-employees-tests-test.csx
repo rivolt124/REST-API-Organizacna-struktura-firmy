@@ -127,3 +127,13 @@ tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
 });
+
+tp.Test("DELETE-02: DeleteDirectorConflict returns 409 (employee is still a director)", () =>
+{
+    Equal(409, (int)tp.Responses["DeleteDirectorConflict"].StatusCode);
+});
+
+tp.Test("DELETE-03: DeleteLeaderConflict returns 409 (employee is still a division leader)", () =>
+{
+    Equal(409, (int)tp.Responses["DeleteLeaderConflict"].StatusCode);
+});
