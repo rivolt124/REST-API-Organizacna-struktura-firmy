@@ -1,9 +1,6 @@
 ## Technické požiadavky
 
-### Spustenie cez Docker
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
-
-### Spustenie bez Dockera
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (voliteľné)
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (alebo iná edícia SQL Servera)
 
