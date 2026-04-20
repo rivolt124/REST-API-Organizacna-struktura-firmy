@@ -1,21 +1,3 @@
-## Technologický stack
-
-| Vrstva | Technológia |
-|---|---|
-| Jazyk | C# / .NET 9 |
-| Databáza | Microsoft SQL Server |
-| Dokumentácia API | Scalar |
-| Testovanie API | TeaPie |
-| Kontajnerizácia | Docker / Docker Compose |
-
----
-
-## Schéma databázy
-
-![Schéma databázy](db/schema.png)
-
----
-
 ## Technické požiadavky
 
 ### Spustenie cez Docker
@@ -24,6 +6,12 @@
 ### Spustenie bez Dockera
 - [.NET 9 SDK](https://dotnet.microsoft.com/download)
 - [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (alebo iná edícia SQL Servera)
+
+---
+
+## Schéma databázy
+
+![Schéma databázy](db/schema.png)
 
 ---
 
