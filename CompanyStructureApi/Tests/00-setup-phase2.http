@@ -1,0 +1,56 @@
+### ============================================================
+### SETUP PHASE 2 - Assign director, create division/project/dept
+### Uses IDs stored in environment by phase 1
+### ============================================================
+
+# @name AssignDirector
+PUT {{host}}/api/companies/{{testCompanyId}}
+Content-Type: application/json
+
+{
+  "companyName": "TestCorp s.r.o.",
+  "companyCode": "CORP-TEST-AUTO",
+  "directorId": {{testDirectorId}}
+}
+
+###
+
+# @name CreateDivision
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionName": "Test Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": {{testDivLeaderId}}
+}
+
+###
+
+# @name CreateProject
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Test Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": {{testProjLeaderId}}
+}
+
+###
+
+# @name CreateDepartment
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEST-AUTO",
+  "departmentName": "Test Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": {{testDeptLeaderId}}
+}

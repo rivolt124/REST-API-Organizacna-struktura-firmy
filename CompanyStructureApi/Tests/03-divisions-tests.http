@@ -1,0 +1,136 @@
+### ============================================================
+### DIVISIONS TESTS
+### ============================================================
+
+# @name GetAll
+GET {{host}}/api/divisions
+Accept: application/json
+
+###
+
+# @name GetById
+GET {{host}}/api/divisions/{{testDivisionId}}
+Accept: application/json
+
+###
+
+# @name GetByIdNotFound
+GET {{host}}/api/divisions/99999
+Accept: application/json
+
+###
+
+# @name SearchByCode
+GET {{host}}/api/divisions/search?code=DIV-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByName
+GET {{host}}/api/divisions/search?name=Test Division
+Accept: application/json
+
+###
+
+# @name SearchByCompanyCode
+GET {{host}}/api/divisions/search?companyCode=CORP-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchCombined
+GET {{host}}/api/divisions/search?companyCode=CORP-TEST-AUTO&name=Test
+Accept: application/json
+
+###
+
+# @name SearchNoMatch
+GET {{host}}/api/divisions/search?name=XXXXXXXXXXX
+Accept: application/json
+
+###
+
+# @name PostConflict
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionName": "Duplicate Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PostNotFoundCompany
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-XXXX",
+  "divisionName": "Ghost Division",
+  "divisionCode": "DIV-GHOST",
+  "leaderId": null
+}
+
+###
+
+# @name PostBadLeader
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionName": "Bad Leader Division",
+  "divisionCode": "DIV-BADLEAD",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name PutUpdateName
+PUT {{host}}/api/divisions/{{testDivisionId}}
+Content-Type: application/json
+
+{
+  "divisionName": "Updated Test Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": {{testDivLeaderId}}
+}
+
+###
+
+# @name PutRemoveLeader
+PUT {{host}}/api/divisions/{{testDivisionId}}
+Content-Type: application/json
+
+{
+  "divisionName": "Updated Test Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PutRestore
+PUT {{host}}/api/divisions/{{testDivisionId}}
+Content-Type: application/json
+
+{
+  "divisionName": "Test Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": {{testDivLeaderId}}
+}
+
+###
+
+# @name PutNotFound
+PUT {{host}}/api/divisions/99999
+Content-Type: application/json
+
+{
+  "divisionName": "Ghost",
+  "divisionCode": "DIV-GHOST",
+  "leaderId": null
+}

@@ -16,6 +16,12 @@ public class CompanyStructureDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Company>().ToTable(t => t.UseSqlOutputClause(false));
+        modelBuilder.Entity<Employee>().ToTable(t => t.UseSqlOutputClause(false));
+        modelBuilder.Entity<Division>().ToTable(t => t.UseSqlOutputClause(false));
+        modelBuilder.Entity<Project>().ToTable(t => t.UseSqlOutputClause(false));
+        modelBuilder.Entity<Department>().ToTable(t => t.UseSqlOutputClause(false));
+
         modelBuilder.Entity<Company>()
             .HasIndex(c => c.company_code)
             .IsUnique();

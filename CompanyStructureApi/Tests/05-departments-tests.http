@@ -1,0 +1,154 @@
+### ============================================================
+### DEPARTMENTS TESTS
+### ============================================================
+
+# @name GetAll
+GET {{host}}/api/departments
+Accept: application/json
+
+###
+
+# @name GetById
+GET {{host}}/api/departments/{{testDepartmentId}}
+Accept: application/json
+
+###
+
+# @name GetByIdNotFound
+GET {{host}}/api/departments/99999
+Accept: application/json
+
+###
+
+# @name SearchByCode
+GET {{host}}/api/departments/search?code=DEP-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByName
+GET {{host}}/api/departments/search?name=Test Department
+Accept: application/json
+
+###
+
+# @name SearchByCompanyCode
+GET {{host}}/api/departments/search?companyCode=CORP-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByDivisionCode
+GET {{host}}/api/departments/search?divisionCode=DIV-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByProjectCode
+GET {{host}}/api/departments/search?projectCode=PRJ-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchCombined
+GET {{host}}/api/departments/search?companyCode=CORP-TEST-AUTO&divisionCode=DIV-TEST-AUTO&projectCode=PRJ-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchNoMatch
+GET {{host}}/api/departments/search?name=XXXXXXXXXXX
+Accept: application/json
+
+###
+
+# @name PostConflict
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEST-AUTO",
+  "departmentName": "Duplicate Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PostNotFoundProject
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-OTHER-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEST-AUTO",
+  "departmentName": "Wrong Combo",
+  "departmentCode": "DEP-WRONGCO",
+  "leaderId": null
+}
+
+###
+
+# @name PostBadLeader
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEST-AUTO",
+  "departmentName": "Bad Leader Department",
+  "departmentCode": "DEP-BADLEAD",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name PutUpdateName
+PUT {{host}}/api/departments/{{testDepartmentId}}
+Content-Type: application/json
+
+{
+  "departmentName": "Updated Test Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": {{testDeptLeaderId}}
+}
+
+###
+
+# @name PutRemoveLeader
+PUT {{host}}/api/departments/{{testDepartmentId}}
+Content-Type: application/json
+
+{
+  "departmentName": "Updated Test Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PutRestore
+PUT {{host}}/api/departments/{{testDepartmentId}}
+Content-Type: application/json
+
+{
+  "departmentName": "Test Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": {{testDeptLeaderId}}
+}
+
+###
+
+# @name PutNotFound
+PUT {{host}}/api/departments/99999
+Content-Type: application/json
+
+{
+  "departmentName": "Ghost",
+  "departmentCode": "DEP-GHOST",
+  "leaderId": null
+}

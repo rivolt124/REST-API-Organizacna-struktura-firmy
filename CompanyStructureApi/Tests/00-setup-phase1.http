@@ -1,0 +1,101 @@
+### ============================================================
+### SETUP PHASE 1 - Create companies and employees
+### Codes are known ahead of time so no dynamic IDs needed yet
+### ============================================================
+
+# @name CreateMainCompany
+POST {{host}}/api/companies
+Content-Type: application/json
+
+{
+  "companyName": "TestCorp s.r.o.",
+  "companyCode": "CORP-TEST-AUTO",
+  "directorId": null
+}
+
+###
+
+# @name CreateOtherCompany
+POST {{host}}/api/companies
+Content-Type: application/json
+
+{
+  "companyName": "OtherCorp a.s.",
+  "companyCode": "CORP-OTHER-AUTO",
+  "directorId": null
+}
+
+###
+
+# @name CreateDirector
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "title": "Ing.",
+  "firstName": "Test",
+  "lastName": "Director",
+  "phone": "+421999000001",
+  "email": "test.director.auto@testcorp.com"
+}
+
+###
+
+# @name CreateDivLeader
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "title": "Bc.",
+  "firstName": "Test",
+  "lastName": "DivLeader",
+  "phone": "+421999000002",
+  "email": "test.divlead.auto@testcorp.com"
+}
+
+###
+
+# @name CreateProjLeader
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "title": null,
+  "firstName": "Test",
+  "lastName": "ProjLeader",
+  "phone": "+421999000003",
+  "email": "test.projlead.auto@testcorp.com"
+}
+
+###
+
+# @name CreateDeptLeader
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "title": null,
+  "firstName": "Test",
+  "lastName": "DeptLeader",
+  "phone": "+421999000004",
+  "email": "test.deptlead.auto@testcorp.com"
+}
+
+###
+
+# @name CreateOtherEmployee
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-OTHER-AUTO",
+  "title": null,
+  "firstName": "Test",
+  "lastName": "OtherEmployee",
+  "phone": "+421999000005",
+  "email": "test.other.auto@othercorp.com"
+}

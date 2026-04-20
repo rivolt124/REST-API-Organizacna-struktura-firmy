@@ -1,0 +1,153 @@
+### ============================================================
+### EMPLOYEES TESTS
+### ============================================================
+
+# @name GetAll
+GET {{host}}/api/employees
+Accept: application/json
+
+###
+
+# @name GetById
+GET {{host}}/api/employees/{{testDirectorId}}
+Accept: application/json
+
+###
+
+# @name GetByIdNotFound
+GET {{host}}/api/employees/99999
+Accept: application/json
+
+###
+
+# @name SearchByEmail
+GET {{host}}/api/employees/search?email=test.director.auto@testcorp.com
+Accept: application/json
+
+###
+
+# @name SearchByFirstName
+GET {{host}}/api/employees/search?firstName=Test
+Accept: application/json
+
+###
+
+# @name SearchByLastName
+GET {{host}}/api/employees/search?lastName=Director
+Accept: application/json
+
+###
+
+# @name SearchByTitle
+GET {{host}}/api/employees/search?title=Ing.
+Accept: application/json
+
+###
+
+# @name SearchHasTitle
+GET {{host}}/api/employees/search?companyCode=CORP-TEST-AUTO&hasTitle=true
+Accept: application/json
+
+###
+
+# @name SearchNoTitle
+GET {{host}}/api/employees/search?companyCode=CORP-TEST-AUTO&hasTitle=false
+Accept: application/json
+
+###
+
+# @name SearchByCompanyCode
+GET {{host}}/api/employees/search?companyCode=CORP-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchNoMatch
+GET {{host}}/api/employees/search?email=nobody@nowhere.sk
+Accept: application/json
+
+###
+
+# @name PostConflict
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "title": null,
+  "firstName": "Duplicate",
+  "lastName": "Email",
+  "phone": "+421999999999",
+  "email": "test.director.auto@testcorp.com"
+}
+
+###
+
+# @name PostNotFoundCompany
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-XXXX",
+  "title": null,
+  "firstName": "Ghost",
+  "lastName": "Employee",
+  "phone": "+421999999998",
+  "email": "ghost@nowhere.sk"
+}
+
+###
+
+# @name PutUpdate
+PUT {{host}}/api/employees/{{testDeptLeaderId}}
+Content-Type: application/json
+
+{
+  "title": "Mgr.",
+  "firstName": "Test",
+  "lastName": "DeptLeader",
+  "phone": "+421999000099",
+  "email": "test.deptlead.auto@testcorp.com"
+}
+
+###
+
+# @name PutRestore
+PUT {{host}}/api/employees/{{testDeptLeaderId}}
+Content-Type: application/json
+
+{
+  "title": null,
+  "firstName": "Test",
+  "lastName": "DeptLeader",
+  "phone": "+421999000004",
+  "email": "test.deptlead.auto@testcorp.com"
+}
+
+###
+
+# @name PutConflict
+PUT {{host}}/api/employees/{{testDeptLeaderId}}
+Content-Type: application/json
+
+{
+  "title": null,
+  "firstName": "Test",
+  "lastName": "DeptLeader",
+  "phone": "+421999000004",
+  "email": "test.director.auto@testcorp.com"
+}
+
+###
+
+# @name PutNotFound
+PUT {{host}}/api/employees/99999
+Content-Type: application/json
+
+{
+  "title": null,
+  "firstName": "Ghost",
+  "lastName": "Nobody",
+  "phone": "+421000000000",
+  "email": "ghost@ghost.sk"
+}

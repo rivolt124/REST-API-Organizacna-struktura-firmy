@@ -1,0 +1,145 @@
+### ============================================================
+### PROJECTS TESTS
+### ============================================================
+
+# @name GetAll
+GET {{host}}/api/projects
+Accept: application/json
+
+###
+
+# @name GetById
+GET {{host}}/api/projects/{{testProjectId}}
+Accept: application/json
+
+###
+
+# @name GetByIdNotFound
+GET {{host}}/api/projects/99999
+Accept: application/json
+
+###
+
+# @name SearchByCode
+GET {{host}}/api/projects/search?code=PRJ-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByName
+GET {{host}}/api/projects/search?name=Test Project
+Accept: application/json
+
+###
+
+# @name SearchByCompanyCode
+GET {{host}}/api/projects/search?companyCode=CORP-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchByDivisionCode
+GET {{host}}/api/projects/search?divisionCode=DIV-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchCombined
+GET {{host}}/api/projects/search?companyCode=CORP-TEST-AUTO&divisionCode=DIV-TEST-AUTO
+Accept: application/json
+
+###
+
+# @name SearchNoMatch
+GET {{host}}/api/projects/search?name=XXXXXXXXXXX
+Accept: application/json
+
+###
+
+# @name PostConflict
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Duplicate Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PostNotFoundDivision
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-OTHER-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Wrong Company Project",
+  "projectCode": "PRJ-WRONGCO",
+  "leaderId": null
+}
+
+###
+
+# @name PostBadLeader
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Bad Leader Project",
+  "projectCode": "PRJ-BADLEAD",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name PutUpdateName
+PUT {{host}}/api/projects/{{testProjectId}}
+Content-Type: application/json
+
+{
+  "projectName": "Updated Test Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": {{testProjLeaderId}}
+}
+
+###
+
+# @name PutRemoveLeader
+PUT {{host}}/api/projects/{{testProjectId}}
+Content-Type: application/json
+
+{
+  "projectName": "Updated Test Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name PutRestore
+PUT {{host}}/api/projects/{{testProjectId}}
+Content-Type: application/json
+
+{
+  "projectName": "Test Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": {{testProjLeaderId}}
+}
+
+###
+
+# @name PutNotFound
+PUT {{host}}/api/projects/99999
+Content-Type: application/json
+
+{
+  "projectName": "Ghost",
+  "projectCode": "PRJ-GHOST",
+  "leaderId": null
+}

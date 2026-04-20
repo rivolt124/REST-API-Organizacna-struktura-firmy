@@ -1,0 +1,86 @@
+### ============================================================
+### CLEANUP - Deletes all test data in reverse dependency order
+### Runs automatically as last file in the suite
+### ============================================================
+
+# @name DeleteDepartment
+DELETE {{host}}/api/departments/{{testDepartmentId}}
+Accept: application/json
+
+###
+
+# @name DeleteProject
+DELETE {{host}}/api/projects/{{testProjectId}}
+Accept: application/json
+
+###
+
+# @name DeleteDivision
+DELETE {{host}}/api/divisions/{{testDivisionId}}
+Accept: application/json
+
+###
+
+# @name RemoveDirector
+PUT {{host}}/api/companies/{{testCompanyId}}
+Content-Type: application/json
+
+{
+  "companyName": "TestCorp s.r.o.",
+  "companyCode": "CORP-TEST-AUTO",
+  "directorId": null
+}
+
+###
+
+# @name DeleteDeptLeader
+DELETE {{host}}/api/employees/{{testDeptLeaderId}}
+Accept: application/json
+
+###
+
+# @name DeleteProjLeader
+DELETE {{host}}/api/employees/{{testProjLeaderId}}
+Accept: application/json
+
+###
+
+# @name DeleteDivLeader
+DELETE {{host}}/api/employees/{{testDivLeaderId}}
+Accept: application/json
+
+###
+
+# @name DeleteDirector
+DELETE {{host}}/api/employees/{{testDirectorId}}
+Accept: application/json
+
+###
+
+# @name DeleteOtherEmployee
+DELETE {{host}}/api/employees/{{testOtherEmployeeId}}
+Accept: application/json
+
+###
+
+# @name DeleteMainCompany
+DELETE {{host}}/api/companies/{{testCompanyId}}
+Accept: application/json
+
+###
+
+# @name DeleteOtherCompany
+DELETE {{host}}/api/companies/{{testOtherCompanyId}}
+Accept: application/json
+
+###
+
+# @name VerifyMainCompanyGone
+GET {{host}}/api/companies/{{testCompanyId}}
+Accept: application/json
+
+###
+
+# @name VerifyEmployeesGone
+GET {{host}}/api/employees/search?companyCode=CORP-TEST-AUTO
+Accept: application/json
