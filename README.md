@@ -103,6 +103,10 @@ Dôvod: Považujem za nesprávne, aby vymazanie spoločnosti automaticky zlikvid
 
 Každý uzol hierarchie musí mať priradeného vedúceho/riaditeľa, čo je zamestnanec. To však vytvára problém pri zakladaní novej spoločnosti – tá ešte nemôže mať žiadnych zamestnancov. Preto je povolené vytvoriť spoločnosť **bez riaditeľa** a priradiť ho až dodatočne cez PUT endpoint.
 
+### Vracanie celej hierarchie pri GET endpointoch
+
+Pri GET endpointoch pre jednotlivé uzly vraciam celú relevantnú hierarchiu dát. Zadanie bolo primárne zamerané na hierarchickú štruktúru organizačných dát, preto som zvolil tento prístup, aby API poskytovalo kompletný kontext nadväzností medzi entitami bez potreby viacerých doplňujúcich volaní.
+
 ### Vágne návratové hlášky a user enumeration
 
 Som si vedomý potenciálneho problému s **user enumeration** – príliš konkrétne chybové správy (napr. „zamestnanec s týmto e-mailom neexistuje" vs. „nesprávne heslo") môžu útočníkovi prezradiť, ktoré záznamy existujú. Preto sú návratové správy nastavené dostatočne vágne. Zároveň sú však stále dostatočne popisné na to, aby sa dalo pohodlne testovať a debugovať správanie API.
