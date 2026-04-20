@@ -132,7 +132,14 @@ public class DivisionsController : ControllerBase
         division.division_code = request.DivisionCode;
         division.division_leader_id = leader?.employee_id;
 
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (SqlException ex) when (ex.Message.Contains("leader role"))
+        {
+            return Conflict("This employee already holds a leader role elsewhere.");
+        }
         return Ok(new DivisionResponse
         {
             DivisionId = division.division_id,

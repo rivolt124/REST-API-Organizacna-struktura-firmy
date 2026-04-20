@@ -115,7 +115,14 @@ public class CompaniesController : ControllerBase
         company.company_code = request.CompanyCode;
         company.director_id = director?.employee_id;
 
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (SqlException ex) when (ex.Message.Contains("leader role"))
+        {
+            return Conflict("This employee already holds a leader role elsewhere.");
+        }
         return Ok(new CompanyResponse
         {
             CompanyId = company.company_id,

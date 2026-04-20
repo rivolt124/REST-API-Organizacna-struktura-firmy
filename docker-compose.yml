@@ -1,0 +1,35 @@
+services:
+  api:
+    build:
+      context: ./CompanyStructureApi
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CompanyStructuredb;User Id=sa;Password=HesloNaDatabazu1!;TrustServerCertificate=True
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+
+  sqlserver:
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=HesloNaDatabazu1!
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  sqlserver-data:

@@ -16,6 +16,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();    
 }
 
+app.MapGet("/", () => Results.Redirect("/scalar/v1")).ExcludeFromDescription();
+
 app.UseHttpsRedirection();
 app.MapControllers();
 

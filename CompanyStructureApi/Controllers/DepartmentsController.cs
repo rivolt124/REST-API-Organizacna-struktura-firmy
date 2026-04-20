@@ -158,7 +158,14 @@ public class DepartmentsController : ControllerBase
         department.department_code = request.DepartmentCode;
         department.department_leader_id = leader?.employee_id;
 
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (SqlException ex) when (ex.Message.Contains("leader role"))
+        {
+            return Conflict("This employee already holds a leader role elsewhere.");
+        }
         return Ok(new DepartmentResponse
         {
             DepartmentId = department.department_id,

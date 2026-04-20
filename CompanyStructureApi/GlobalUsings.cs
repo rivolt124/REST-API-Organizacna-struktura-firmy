@@ -10,3 +10,4 @@ global using CompanyStructureApi.DTOs.Divisions;
 global using CompanyStructureApi.DTOs.Projects;
 global using CompanyStructureApi.DTOs.Departments;
 global using CompanyStructureApi.Helpers;
+global using Microsoft.Data.SqlClient;

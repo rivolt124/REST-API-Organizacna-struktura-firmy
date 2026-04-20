@@ -135,7 +135,14 @@ public class ProjectsController : ControllerBase
         project.project_code = request.ProjectCode;
         project.project_leader_id = leader?.employee_id;
 
-        await _db.SaveChangesAsync();
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (SqlException ex) when (ex.Message.Contains("leader role"))
+        {
+            return Conflict("This employee already holds a leader role elsewhere.");
+        }
         return Ok(new ProjectResponse
         {
             ProjectId = project.project_id,
