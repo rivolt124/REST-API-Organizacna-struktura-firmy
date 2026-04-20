@@ -134,3 +134,79 @@ Content-Type: application/json
   "divisionCode": "DIV-GHOST",
   "leaderId": null
 }
+
+###
+
+# @name PostMissingFields
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{}
+
+###
+
+# @name PostSameCodeDifferentCompany
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-OTHER-AUTO",
+  "divisionName": "Same Code Other Company",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": null
+}
+
+###
+
+# @name DeleteSameCodeDivision
+DELETE {{host}}/api/divisions/{{PostSameCodeDifferentCompany.response.body.$.divisionId}}
+Accept: application/json
+
+###
+
+# @name CreateTempDivision
+POST {{host}}/api/divisions
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionName": "Temp Division",
+  "divisionCode": "DIV-TEMP-CONFLICT",
+  "leaderId": null
+}
+
+###
+
+# @name PutConflict
+PUT {{host}}/api/divisions/{{testDivisionId}}
+Content-Type: application/json
+
+{
+  "divisionName": "Test Division",
+  "divisionCode": "DIV-TEMP-CONFLICT",
+  "leaderId": {{testDivLeaderId}}
+}
+
+###
+
+# @name DeleteTempDivision
+DELETE {{host}}/api/divisions/{{CreateTempDivision.response.body.$.divisionId}}
+Accept: application/json
+
+###
+
+# @name PutBadLeader
+PUT {{host}}/api/divisions/{{testDivisionId}}
+Content-Type: application/json
+
+{
+  "divisionName": "Test Division",
+  "divisionCode": "DIV-TEST-AUTO",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name DeleteNotFound
+DELETE {{host}}/api/divisions/99999
+Accept: application/json

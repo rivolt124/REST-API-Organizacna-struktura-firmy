@@ -143,3 +143,61 @@ Content-Type: application/json
   "projectCode": "PRJ-GHOST",
   "leaderId": null
 }
+
+###
+
+# @name PostMissingFields
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{}
+
+###
+
+# @name CreateTempProject
+POST {{host}}/api/projects
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectName": "Temp Project",
+  "projectCode": "PRJ-TEMP-CONFLICT",
+  "leaderId": null
+}
+
+###
+
+# @name PutConflict
+PUT {{host}}/api/projects/{{testProjectId}}
+Content-Type: application/json
+
+{
+  "projectName": "Test Project",
+  "projectCode": "PRJ-TEMP-CONFLICT",
+  "leaderId": {{testProjLeaderId}}
+}
+
+###
+
+# @name DeleteTempProject
+DELETE {{host}}/api/projects/{{CreateTempProject.response.body.$.projectId}}
+Accept: application/json
+
+###
+
+# @name PutBadLeader
+PUT {{host}}/api/projects/{{testProjectId}}
+Content-Type: application/json
+
+{
+  "projectName": "Test Project",
+  "projectCode": "PRJ-TEST-AUTO",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name DeleteNotFound
+DELETE {{host}}/api/projects/99999
+Accept: application/json

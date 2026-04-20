@@ -15,6 +15,10 @@ tp.Test("GET-02: GetById returns 200 with correct division", () =>
     Equal("DIV-TEST-AUTO", (string)body.divisionCode);
     Equal("Test Division", (string)body.divisionName);
     NotNull((object)body.leaderEmail);
+    NotNull((object)body.leaderFullName);
+    Equal("Bc. Test DivLeader", (string)body.leaderFullName);
+    var obj = JObject.Parse(tp.Responses["GetById"].GetBody());
+    Equal(1, obj["projects"].Count());
 });
 
 tp.Test("GET-03: GetByIdNotFound returns 404", () =>
@@ -100,4 +104,44 @@ tp.Test("PUT-03: PutRestore returns 200 with original state", () =>
 tp.Test("PUT-04: PutNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["PutNotFound"].StatusCode);
+});
+
+tp.Test("POST-04: PostMissingFields returns 400", () =>
+{
+    Equal(400, (int)tp.Responses["PostMissingFields"].StatusCode);
+});
+
+tp.Test("POST-05: PostSameCodeDifferentCompany returns 201 (code scoped per company)", () =>
+{
+    Equal(201, (int)tp.Responses["PostSameCodeDifferentCompany"].StatusCode);
+});
+
+tp.Test("CLEANUP: DeleteSameCodeDivision returned 204", () =>
+{
+    Equal(204, (int)tp.Responses["DeleteSameCodeDivision"].StatusCode);
+});
+
+tp.Test("POST-06: CreateTempDivision returned 201", () =>
+{
+    Equal(201, (int)tp.Responses["CreateTempDivision"].StatusCode);
+});
+
+tp.Test("PUT-05: PutConflict returns 409 (code already used in same company)", () =>
+{
+    Equal(409, (int)tp.Responses["PutConflict"].StatusCode);
+});
+
+tp.Test("CLEANUP: DeleteTempDivision returned 204", () =>
+{
+    Equal(204, (int)tp.Responses["DeleteTempDivision"].StatusCode);
+});
+
+tp.Test("PUT-06: PutBadLeader returns 404 (leader from different company)", () =>
+{
+    Equal(404, (int)tp.Responses["PutBadLeader"].StatusCode);
+});
+
+tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
+{
+    Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
 });

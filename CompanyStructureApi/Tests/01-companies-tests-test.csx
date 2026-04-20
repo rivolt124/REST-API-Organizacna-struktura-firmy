@@ -15,6 +15,10 @@ tp.Test("GET-02: GetById returns 200 with correct company", () =>
     dynamic body = tp.Responses["GetById"].GetBodyAsExpando();
     Equal("CORP-TEST-AUTO", (string)body.companyCode);
     Equal("TestCorp s.r.o.", (string)body.companyName);
+    NotNull((object)body.directorFullName);
+    Equal("Ing. Test Director", (string)body.directorFullName);
+    var obj = JObject.Parse(tp.Responses["GetById"].GetBody());
+    Equal(1, obj["divisions"].Count());
 });
 
 tp.Test("GET-03: GetByIdNotFound returns 404", () =>
@@ -113,4 +117,14 @@ tp.Test("PUT-06: PutBadDirector returns 400 (director from different company)", 
 tp.Test("PUT-07: PutNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["PutNotFound"].StatusCode);
+});
+
+tp.Test("POST-03: PostMissingFields returns 400", () =>
+{
+    Equal(400, (int)tp.Responses["PostMissingFields"].StatusCode);
+});
+
+tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
+{
+    Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
 });

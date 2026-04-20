@@ -15,6 +15,8 @@ tp.Test("GET-02: GetById returns 200 with correct department", () =>
     Equal("DEP-TEST-AUTO", (string)body.departmentCode);
     Equal("Test Department", (string)body.departmentName);
     NotNull((object)body.leaderEmail);
+    NotNull((object)body.leaderFullName);
+    Equal("Test DeptLeader", (string)body.leaderFullName);
 });
 
 tp.Test("GET-03: GetByIdNotFound returns 404", () =>
@@ -114,4 +116,34 @@ tp.Test("PUT-03: PutRestore returns 200 with original state", () =>
 tp.Test("PUT-04: PutNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["PutNotFound"].StatusCode);
+});
+
+tp.Test("POST-05: PostMissingFields returns 400", () =>
+{
+    Equal(400, (int)tp.Responses["PostMissingFields"].StatusCode);
+});
+
+tp.Test("POST-06: CreateTempDepartment returned 201", () =>
+{
+    Equal(201, (int)tp.Responses["CreateTempDepartment"].StatusCode);
+});
+
+tp.Test("PUT-05: PutConflict returns 409 (code already used in same project)", () =>
+{
+    Equal(409, (int)tp.Responses["PutConflict"].StatusCode);
+});
+
+tp.Test("CLEANUP: DeleteTempDepartment returned 204", () =>
+{
+    Equal(204, (int)tp.Responses["DeleteTempDepartment"].StatusCode);
+});
+
+tp.Test("PUT-06: PutBadLeader returns 404 (leader from different company)", () =>
+{
+    Equal(404, (int)tp.Responses["PutBadLeader"].StatusCode);
+});
+
+tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
+{
+    Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
 });

@@ -151,3 +151,17 @@ Content-Type: application/json
   "phone": "+421000000000",
   "email": "ghost@ghost.sk"
 }
+
+###
+
+# @name PostMissingFields
+POST {{host}}/api/employees
+Content-Type: application/json
+
+{}
+
+###
+
+# @name DeleteNotFound
+DELETE {{host}}/api/employees/99999
+Accept: application/json

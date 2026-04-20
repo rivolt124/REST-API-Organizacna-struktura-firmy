@@ -152,3 +152,62 @@ Content-Type: application/json
   "departmentCode": "DEP-GHOST",
   "leaderId": null
 }
+
+###
+
+# @name PostMissingFields
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{}
+
+###
+
+# @name CreateTempDepartment
+POST {{host}}/api/departments
+Content-Type: application/json
+
+{
+  "companyCode": "CORP-TEST-AUTO",
+  "divisionCode": "DIV-TEST-AUTO",
+  "projectCode": "PRJ-TEST-AUTO",
+  "departmentName": "Temp Department",
+  "departmentCode": "DEP-TEMP-CONFLICT",
+  "leaderId": null
+}
+
+###
+
+# @name PutConflict
+PUT {{host}}/api/departments/{{testDepartmentId}}
+Content-Type: application/json
+
+{
+  "departmentName": "Test Department",
+  "departmentCode": "DEP-TEMP-CONFLICT",
+  "leaderId": {{testDeptLeaderId}}
+}
+
+###
+
+# @name DeleteTempDepartment
+DELETE {{host}}/api/departments/{{CreateTempDepartment.response.body.$.departmentId}}
+Accept: application/json
+
+###
+
+# @name PutBadLeader
+PUT {{host}}/api/departments/{{testDepartmentId}}
+Content-Type: application/json
+
+{
+  "departmentName": "Test Department",
+  "departmentCode": "DEP-TEST-AUTO",
+  "leaderId": {{testOtherEmployeeId}}
+}
+
+###
+
+# @name DeleteNotFound
+DELETE {{host}}/api/departments/99999
+Accept: application/json

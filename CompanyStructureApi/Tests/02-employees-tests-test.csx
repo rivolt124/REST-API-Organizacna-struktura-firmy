@@ -15,6 +15,8 @@ tp.Test("GET-02: GetById returns 200 with correct employee", () =>
     Equal("test.director.auto@testcorp.com", (string)body.email);
     Equal("CORP-TEST-AUTO", (string)body.companyCode);
     Equal("Ing.", (string)body.title);
+    Equal("Test", (string)body.firstName);
+    Equal("Director", (string)body.lastName);
 });
 
 tp.Test("GET-03: GetByIdNotFound returns 404", () =>
@@ -114,4 +116,14 @@ tp.Test("PUT-03: PutConflict returns 409 (email taken)", () =>
 tp.Test("PUT-04: PutNotFound returns 404", () =>
 {
     Equal(404, (int)tp.Responses["PutNotFound"].StatusCode);
+});
+
+tp.Test("POST-03: PostMissingFields returns 400", () =>
+{
+    Equal(400, (int)tp.Responses["PostMissingFields"].StatusCode);
+});
+
+tp.Test("DELETE-01: DeleteNotFound returns 404", () =>
+{
+    Equal(404, (int)tp.Responses["DeleteNotFound"].StatusCode);
 });

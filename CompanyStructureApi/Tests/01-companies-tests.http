@@ -155,3 +155,17 @@ Content-Type: application/json
   "companyCode": "CORP-GHOST",
   "directorId": null
 }
+
+###
+
+# @name PostMissingFields
+POST {{host}}/api/companies
+Content-Type: application/json
+
+{}
+
+###
+
+# @name DeleteNotFound
+DELETE {{host}}/api/companies/99999
+Accept: application/json
